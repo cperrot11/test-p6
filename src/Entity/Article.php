@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+Use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -18,6 +19,12 @@ class Article
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 10,
+     *      minMessage = "Merci de saisir {{ limit }} caractères minimum",
+     *      maxMessage = "Merci de saisir {{ limit }} caractères maximum"
+     * )
      */
     private $content;
 
@@ -28,8 +35,16 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $picture;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
 
     public function getId(): ?int
     {
@@ -68,6 +83,18 @@ class Article
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

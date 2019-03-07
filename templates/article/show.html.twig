@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <section class="articles">
+        <article>
+            <h2>{{ article.title }}</h2>
+            <div class="metadata">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
+            <div class="content"><img src={{ article.picture }} alt="">
+                {{ article.content | raw}}
+            </div>
+            <a href="{{ path('blog')}}" class="btn btn-primary">Retour</a>
+        </article>
+    </section>
+{% endblock %}

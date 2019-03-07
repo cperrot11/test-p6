@@ -1,7 +1,8 @@
+1/03
 créer répertoire
 create projet
 require server
-server run
+php bin/console server:run
 configurer github sur le projet
 git init = inutile semble-t-il, déjà créé ?
 créer controlleur
@@ -18,4 +19,16 @@ composer require orm-fixtures --dev
 composer require fzaninotto/faker --dev
 dupliquer AppFixture->ArticleFixture
 remplir ArticleFixture (cf faker)
+php bin/console doctrine:fixture:load
                                                                 Commit base + 1er table
+Php bin/console make:form + articleType -> créer formulaire
+rajouter route new et update
+créer l'affichage "create.html.twig"
++ {% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+                                                                Commit formulaire article
+Validation:
+ajouter à framework.yaml
+framework:
+    validation: { enable_annotations: true }
+Use Symfony\Component\Validator\Constraints as Assert; -> à rajouter dans l'entité
+                                                                Commit Validation

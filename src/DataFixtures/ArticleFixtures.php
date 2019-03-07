@@ -14,11 +14,13 @@ class ArticleFixtures extends Fixture
 
         $faker = Factory::create('fr_FR');
 
-        for ($a=1; $a<5; $a++) {
+        for ($a=1; $a<8; $a++) {
             $article = new Article();
+            $article->setTitle($faker->sentence());
             $article->setCreatedAt($faker->dateTimeBetween('-6months'));
-            $content = '<p>' . join($faker->paragraphs(2), '</p><p>') . '</p>';
+            $content = '<p>' . join($faker->paragraphs(10), '</p><p>') . '</p>';
             $article->setContent($content);
+            $article->setPicture($faker->imageUrl(640,480,'sports'));
 
             $manager->persist($article);
         }
