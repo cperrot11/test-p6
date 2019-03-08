@@ -4,7 +4,7 @@
     {{ parent() }}
     <section class="articles">
         {% for article in articles %}
-            <article class="col-3 col-3 col-3">
+            <article class="article">
                 <h2>{{ article.title }}</h2>
                 <div class="metadata">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
                 <div class="content"><img src={{ article.picture }} alt="">

@@ -32,3 +32,9 @@ framework:
     validation: { enable_annotations: true }
 Use Symfony\Component\Validator\Constraints as Assert; -> à rajouter dans l'entité
                                                                 Commit Validation
+
+php bin/console make:entity Comment
+    Attention article = relation ManytoOne
+Php bin/console make:form + commentType -> créer formulaire
+*** Attention *** : Il faut virer ->add('article') du formulaire
+                                                                Commit entity Comment
