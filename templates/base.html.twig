@@ -10,7 +10,7 @@
         <div class="container">
           {% block body %}
               <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                  <a class="navbar-brand" href="{{ path('main') }}">Surf feeling</a>
+                  <a class="navbar-brand" href="{{ path('home') }}">Surf feeling</a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                   </button>
@@ -25,6 +25,13 @@
                           </li>
                           <li class="nav-item">
                               <a class="nav-link" href="#">A propos</a>
+                          </li>
+                          <li class="nav-item">
+                              {% if app.user %}
+                                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                              {% else %}
+                                <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                              {% endif %}
                           </li>
                       </ul>
                       <form class="form-inline my-2 my-lg-0">

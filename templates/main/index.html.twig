@@ -10,12 +10,12 @@
     {{ parent() }}
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ (app.user)?app.user.getName: '' }}✅</h1>
 
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/wamp64/www/OC/P6/blog1/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/OC/P6/blog1/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/wamp64/www/OC/P6/blog1/templates/main/login.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
     </ul>
 </div>
     <div>

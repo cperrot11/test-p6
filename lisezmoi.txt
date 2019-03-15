@@ -38,3 +38,17 @@ php bin/console make:entity Comment
 Php bin/console make:form + commentType -> créer formulaire
 *** Attention *** : Il faut virer ->add('article') du formulaire
                                                                 Commit entity Comment
+composer require security
+php bin/console make:user -> Créer entité dédiée sécurité
+php bin/console make:entity -> rajouter des champs à user.
++ Créer et lancer les migrations
+php bin/console make:fixtures + User -> créé le jeux de données
+
+php bin/console make:auth + class = LoginFormAuthentificator
+    created: src/Security/LoginFormAuthentificatorAuthenticator.php
+    updated: config/packages/security.yaml
+    created: src/Controller/SecurityController.php
+    created: templates/security/login.html.twig
+
+
+

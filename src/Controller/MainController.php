@@ -15,17 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main")
      * @Route("/", name="home")
      */
     public function index()
     {
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
             'title'=>'Bienvennue',
             'afficher'=>true
         ]);
     }
+
 
     /**
      * @Route("/blog", name="blog")
