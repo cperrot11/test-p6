@@ -49,6 +49,7 @@ php bin/console make:auth + class = LoginFormAuthentificator
     updated: config/packages/security.yaml
     created: src/Controller/SecurityController.php
     created: templates/security/login.html.twig
+                                                                Commit security
 
 
 
