@@ -22,8 +22,8 @@ class Article
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(
-     *      min = 2,
-     *      max = 10,
+     *      min = 10,
+     *      max = 2000,
      *      minMessage = "Merci de saisir {{ limit }} caractères minimum",
      *      maxMessage = "Merci de saisir {{ limit }} caractères maximum"
      * )

@@ -7,6 +7,8 @@ use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
+use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,7 +60,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('show_trick', ['id'=>$article->getId()]);
         }
 
-        return $this->render('article/create.html.twig', [
+        return $this->render('update/trickEdit.html.twig', [
             'title'=>'New',
             'formArticle'=>$form->createView()
         ]);
@@ -74,7 +76,8 @@ class MainController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $comment->setCreatedAt(new \DateTime())
-                    ->setArticle($article);
+                    ->setArticle($article)
+                    ->setUser($this->getUser());
 
             $manager->persist($comment);
             $manager->flush();
@@ -84,6 +87,72 @@ class MainController extends AbstractController
             'title'=>'Trick',
             'article'=>$article,
             'commentForm'=> $form->createView()
+        ]);
+    }
+    /**
+    * @Route("/manage", name="manage")
+    */
+    public function manage(){
+        return $this->render('manage/manage.html.twig', [
+            'title'=>'Administration'
+        ]);
+    }
+    /**
+     * @Route("/manage/user", name="listing_user")
+     */
+    public function listingUser(UserRepository $repo){
+        $users = $repo->findAll();
+
+        return $this->render('manage/user.html.twig', [
+            'title'=>'Utilisateurs',
+            'users'=>$users
+        ]);
+    }
+    /**
+     * @Route("/manage/trick", name="listing_trick")
+     */
+    public function listingTrick(ArticleRepository $repo){
+        $tricks = $repo->findAll();
+
+        return $this->render('manage/tricks.html.twig', [
+            'title'=>'Tricks',
+            'tricks'=>$tricks
+        ]);
+    }
+    /**
+     * @Route("/manage/comment", name="listing_comment")
+     */
+    public function listingComment(CommentRepository $repo){
+        $comments = $repo->findAll();
+
+        return $this->render('manage/comments.html.twig', [
+            'title'=>'Commentaires',
+            'comments'=>$comments
+        ]);
+    }
+    /**
+     * @Route("/manage/comment/{id}/edit", name="comment_update")
+     */
+    public function formComment(Comment $comment=null, Request $request, ObjectManager $manager){
+        if (!$comment){
+            $comment = new Comment();
+        }
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            if(!$comment->getId()){
+                $comment->setCreatedAt(new \DateTime()); //déplacer vers constructeur
+            }
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('show_trick', ['id'=>$comment->getArticle()->getId()]);
+        }
+
+        return $this->render('update/commentEdit.html.twig', [
+            'title'=>'New',
+            'formComment'=>$form->createView()
         ]);
     }
 }

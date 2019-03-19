@@ -17,7 +17,7 @@
             <div class="comment">
                 <div class="row">
                     <div class="col-3">
-                        {{ comment.author }} <small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
+                        {{ comment.user.name }} <small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
                     </div>
                     <div class="col">
                         {{ comment.content | raw }}
@@ -27,11 +27,12 @@
         {% endfor %}
         {% if app.user %}
         {{ form_start(commentForm) }}
-            {{ form_row(commentForm.author, {'attr' : {'placeholder': "Votre nom"}}) }}
+            {{ form_row(commentForm.user, {'value':app.user.getName }, {'attr' : {'placeholder': "Votre nom"}}) }}
             {{ form_row(commentForm.content, {'attr' : {'placeholder': "Votre commentaire"}}) }}
             <button type="submit" class="btn btn-success">Commenter</button>
-        {{ form_end(commentForm) }}
-            {#{{ form_end(commentForm, {'render_rest': false}) }}#}
+        {#{{ form_end(commentForm) }}#}
+            {{ form_row(commentForm._token) }}
+            {{ form_end(commentForm, {'render_rest': false}) }}
         {% else %}
             <h2>Vous ne pouvez pas commenter.</h2>
             <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>

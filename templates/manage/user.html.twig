@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Gestion des utilisateurs</h1>
+    <tr>
+    <table>
+        <thead>
+            <td>id</td>
+            <td>Nom</td>
+            <td>E-mail</td>
+            <td>Droit</td>
+            <td>Action</td>
+        </thead>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles|join(',') }}</td>
+                <td>
+                    <a href="{{ path('user_update',{id : user.id}) }}" class="fa fa-edit"></a>
+                    <a href="{{ path('security_registration') }}" class="fa fa-trash-alt"></a>
+
+
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

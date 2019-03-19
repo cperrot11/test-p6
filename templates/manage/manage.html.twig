@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <section>
+        <a class="btn btn-success" href="{{ path('listing_user') }}">Gestion Utilisateur</a>
+        <a class="btn btn-success" href="{{ path('listing_trick') }}">Gestion des articles</a>
+        <a class="btn btn-success" href="{{ path('listing_comment') }}">Gestions des commentaires</a>
+    </section>
+{% endblock %}

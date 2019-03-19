@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Gestion des tricks</h1>
+    <tr>
+    <table>
+        <thead>
+            <td>id</td>
+            <td>Date</td>
+            <td>Title</td>
+            <td>Content</td>
+            <td>Action</td>
+        </thead>
+        {% for trick in tricks %}
+            <tr>
+                <td>{{ trick.id }}</td>
+                <td>{{ trick.createdAt|date("d/m/Y") }}</td>
+                <td>{{ trick.title}}</td>
+                <td>{{ trick.content|slice(0,20)|raw }}...</td>
+                <td>
+                    <a href="{{ path('blog_update', {id : trick.id}) }}" class="fa fa-edit"></a>
+                    <a href="{{ path('security_registration') }}" class="fa fa-trash-alt"></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
