@@ -53,6 +53,8 @@ Renseigner getLoginUrl() pour la route vers formulaire de login
 Renseigner return new RedirectResponse($this->urlGenerator->generate('home'));
     en cas de réussite.
                                                                 Commit security
+addreference + getreference pour fixture multi entités
+                                                                Commit multi entité
 
 
 

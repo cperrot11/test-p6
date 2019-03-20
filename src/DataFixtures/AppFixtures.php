@@ -41,22 +41,10 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
 
             $manager->persist($user);
-            $this->addReference('USER_REFERENCE'.$a, $user);
+            $this->addReference('user_ref'.$a, $user);
         }
         $manager->flush();
-    }
-    public static function getGroups(): array
-    {
-        return ['group3'];
-    }
-}
 
-class AppFixtures2 extends Fixture implements FixtureGroupInterface
-{
-    public function load(ObjectManager $manager)
-    {
-
-        $faker = Factory::create('fr_FR');
         //         Création des articles
         for ($b = 1; $b < 5; $b++) {
             $article = new Article();
@@ -67,35 +55,24 @@ class AppFixtures2 extends Fixture implements FixtureGroupInterface
             $article->setPicture($faker->imageUrl(640, 480, 'sports'));
 
             $manager->persist($article);
-            $this->addReference('ARTICLE_REFERENCE'.$b, $article);
+            $this->addReference('article_ref'.$b, $article);
         }
         $manager->flush();
-    }
-    public static function getGroups(): array
-    {
-        return ['group4'];
-    }
-}
-class AppFixtures3 extends Fixture implements FixtureGroupInterface
-{
-    public function load(ObjectManager $manager)
-    {
-        $faker = Factory::create('fr_FR');
-//          Création des commentaires
+
+//            Création des commentaires
         for ($c=1; $c<10; $c++) {
             $comment = new Comment();
-            $rand_user=rand(1,5);
-            $user = $this->getReference(USER_REFERENCE.$rand_user);
-            $rand_article=rand(1,5);
-            $article = $this->getReference(ARTICLE_REFERENCE.$rand_article);
+            $rand_user=rand(1,4);
+            $user = $this->getReference('user_ref'.$rand_user);
+            $rand_article=rand(1,4);
+            $article = $this->getReference('article_ref'.$rand_article);
 
             $content = '<p>'. join($faker->paragraphs(1), '</p><p>').'</p>';
 
             $comment->setCreatedAt($faker->dateTimeBetween('-2months'))
                 ->setArticle($article)
                 ->setContent($content)
-                ->setUser($user)
-                ->setAuthor($user->getName()); //trouver le nom ?
+                ->setUser($user);
 
             $manager->persist($comment);
         }
@@ -103,6 +80,6 @@ class AppFixtures3 extends Fixture implements FixtureGroupInterface
     }
     public static function getGroups(): array
     {
-        return ['group5'];
+        return ['group3'];
     }
 }
