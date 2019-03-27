@@ -55,6 +55,8 @@ Renseigner return new RedirectResponse($this->urlGenerator->generate('home'));
                                                                 Commit security
 addreference + getreference pour fixture multi entités
                                                                 Commit multi entité
+php bin/console make:command -> créer commande console
+    Create-admin
 
 
 

@@ -37,6 +37,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
             $user = new User();
             $user->setName($faker->lastName);
             $user->setEmail($faker->unique()->companyEmail);
+            $user->setRoles(['ROLE_ADMIN']);
 
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
 

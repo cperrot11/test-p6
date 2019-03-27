@@ -10,6 +10,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Provider\DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,14 +71,13 @@ class MainController extends AbstractController
      */
     public function showTrick(Article $article, Request $request, ObjectManager $manager){
         $comment = new Comment();
+        $comment->setUser($this->getUser());
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $comment->setCreatedAt(new \DateTime())
-                    ->setArticle($article)
-                    ->setUser($this->getUser());
+            $comment->setArticle($article);
 
             $manager->persist($comment);
             $manager->flush();
