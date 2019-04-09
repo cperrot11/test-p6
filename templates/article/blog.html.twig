@@ -2,17 +2,22 @@
 
 {% block body %}
     {{ parent() }}
-    <section class="articles">
+    <div class="col-md-12">
+        <h1>Bienvennue sur le blog</h1>
+    </div>
+    <section class="row">
         {% for article in articles %}
-            <article class="article">
-                <h2>{{ article.title }}</h2>
-                <div class="metadata">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
-                <div class="content"><img src={{ article.picture }} alt="">
-                    {{ article.content | raw}}
-                    <a href="{{ path('show_trick', {id : article.id}) }}" class="btn btn-primary">Lire la suite</a>
+            <article class="col-md-3">
+                <div class="card text-white bg-secondary mb-3">
+                    {{ article.title }}
+                    <div class="">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
+                    <div><img src={{ article.picture }} alt="" style="width:50%">
+                        {{ article.content(200) | raw}}
+                        <a href="{{ path('show_trick', {id : article.id}) }}" class="btn btn-primary">Lire la suite</a>
+                    </div>
                 </div>
             </article>
         {% endfor %}
-        <a href="{{ path('blog_create') }}" class="btn btn-primary">Nouvel article</a>
     </section>
+    <a href="{{ path('blog_create') }}" class="btn btn-primary">Nouvel article</a>
 {% endblock %}

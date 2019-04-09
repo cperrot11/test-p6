@@ -63,9 +63,9 @@ class Article
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getContent(int $length=0): ?string
     {
-        return $this->content;
+        return ($length>0)?substr($this->content,0, $length):$this->content;
     }
 
     public function setContent(string $content): self

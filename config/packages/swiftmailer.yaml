@@ -1,3 +1,13 @@
 swiftmailer:
-    url: '%env(MAILER_URL)%'
+#    url: '%env(MAILER_URL)%'
+    transport: smtp
+    auth_mode: login
+    host: ssl0.ovh.net
+    port: 587
+    encryption: tls
+    username: contact@perrotin.eu
+    password: Mecani4306
     spool: { type: 'memory' }
+
+
+

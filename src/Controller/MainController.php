@@ -41,8 +41,8 @@ class MainController extends AbstractController
             ]);
     }
     /**
-     * @Route("/trick/new", name="blog_create")
-     * @Route("/trick/{id}/edit", name="blog_update")
+     * @Route("/user/trick/new", name="blog_create")
+     * @Route("/user/trick/{id}/edit", name="blog_update")
      */
     public function formArticle(Article $article=null, Request $request, ObjectManager $manager){
         if (!$article){

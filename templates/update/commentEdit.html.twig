@@ -5,8 +5,6 @@
     {{ parent() }}
     <section>
         {{ form_start(formComment) }}
-        {#{{ form_row(formComment) }}#}
-            {{ form_row(formComment.createdAt) }}
             {{ form_row(formComment.user) }}
             {{ form_row(formComment.content) }}
             <button type="submit" class="btn btn-success">Modifier</button>
