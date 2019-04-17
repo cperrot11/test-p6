@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -47,4 +48,12 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllArticle($page, $limit){
+        $query = $this->createQueryBuilder('o')
+                      ->orderBy('o.createdAt','DESC')
+                      ->getQuery()
+                      ->setFirstResult(($page-1)*$limit)
+                      ->setMaxResults($limit);
+        return new Paginator($query);
+    }
 }

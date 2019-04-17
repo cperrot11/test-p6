@@ -3,13 +3,13 @@
 {% block body %}
     {{ parent() }}
     <div class="col-md-12">
-        <h1>Bienvennue sur le blog</h1>
+        <h1>Bienvenue sur le blog ({{ articles.count }} articles)</h1>
     </div>
     <section class="row">
         {% for article in articles %}
             <article class="col-md-3">
                 <div class="card text-white bg-secondary mb-3">
-                    {{ article.title }}
+                    {{ article.id}} : {{ article.title }}
                     <div class="">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
                     <div><img src={{ article.picture }} alt="" style="width:50%">
                         {{ article.content(200) | raw}}
@@ -19,5 +19,24 @@
             </article>
         {% endfor %}
     </section>
+    <div class="pagination">
+        <span>page {{ pagination.page }}/{{ pagination.pages_count }} : </span>
+
+        <div class="pagination-buttons link_blog text-center">
+            {% if pagination.page>1 %}
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': 1})) }}"> << </a>
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page-1})) }}"> < <a>
+            {% endif %}
+            {% for p in range(max(pagination.page-2, 1), min(pagination.page+2, pagination.pages_count)) %}
+                <a{% if p == pagination.page %} class="current-page"{% endif %} href="{{ path(pagination.route, pagination.route_params|merge({'page': p})) }}">{{ p }}</a>
+            {% endfor %}
+
+            {% if pagination.page<pagination.pages_count %}
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page+1})) }}">></a>
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.pages_count})) }}">>></a>
+            {% endif %}
+        </div>
+    </div>
+    <hr/>
     <a href="{{ path('blog_create') }}" class="btn btn-primary">Nouvel article</a>
 {% endblock %}

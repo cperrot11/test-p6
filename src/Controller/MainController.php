@@ -30,13 +30,25 @@ class MainController extends AbstractController
 
 
     /**
-     * @Route("/blog", name="blog")
+     * @Route("/blog/{page<\d+>?1}", name="blog")
      */
-    public function blog(ArticleRepository $repo){
-        $article = $repo->findAll();
+//    public function blog(Request $request, ArticleRepository $repo){
+//        $page = $request->query->get('page');
+    public function blog($page , ArticleRepository $repo){
+        $page=(!$page)?1:$page;
+
+        $article = $repo->findAllArticle($page, getenv('LIMIT'));
+
+        $pagination = array(
+            'page' => $page,
+            'route' => 'blog',
+            'pages_count' => ceil($article->count()/getenv('LIMIT')),
+            'route_params' => array()
+        );
 
         return $this->render('article/blog.html.twig', [
             'title'=>'Blog',
+            'pagination'=>$pagination,
             'articles'=>$article
             ]);
     }
@@ -47,6 +59,14 @@ class MainController extends AbstractController
     public function formArticle(Article $article=null, Request $request, ObjectManager $manager){
         if (!$article){
             $article = new Article();
+            $action ='Créer';
+            $titre = 'New';
+            $titre2 = 'Ajouter figure.';
+        }
+        else {
+            $action='Modifier';
+            $titre = 'Update';
+            $titre2 = 'Modifier figure.';
         }
         $form = $this->createForm(ArticleType::class, $article);
 
@@ -62,7 +82,9 @@ class MainController extends AbstractController
         }
 
         return $this->render('update/trickEdit.html.twig', [
-            'title'=>'New',
+            'title'=>$titre,
+            'title2'=>$titre2,
+            'action' => $action,
             'formArticle'=>$form->createView()
         ]);
     }

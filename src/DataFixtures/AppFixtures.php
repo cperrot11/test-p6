@@ -33,7 +33,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
     {
         $faker = Factory::create('fr_FR');
 //        Création des User
-        for ($a = 1; $a < 5; $a++) {
+        for ($a = 1; $a < 500; $a++) {
             $user = new User();
             $user->setName($faker->lastName);
             $user->setEmail($faker->unique()->companyEmail);
@@ -47,7 +47,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
         $manager->flush();
 
         //         Création des articles
-        for ($b = 1; $b < 5; $b++) {
+        for ($b = 1; $b < 50; $b++) {
             $article = new Article();
             $article->setTitle($faker->sentence());
             $article->setCreatedAt($faker->dateTimeBetween('-6months'));
