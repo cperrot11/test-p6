@@ -3,11 +3,11 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>{{ title2 }}</h1>
+    <h1>Nouvelle figure</h1>
     <section>
         {{ form_start(formArticle) }}
             {{ form_row(formArticle) }}
-            <button type="submit" class="btn btn-success">{{ action }}</button>
+            <button type="submit" class="btn btn-success">Créer</button>
         {{ form_end(formArticle) }}
     </section>
     {#<section>#}

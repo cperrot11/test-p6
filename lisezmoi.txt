@@ -60,6 +60,9 @@ php bin/console make:command -> créer commande console
                                                                 Commit Create-boss Command
 composer require symfony/swiftmailer-bundle -> utilisation de mail
                                                                 Commit Forgot-password
+php bin/console make:entity Media
+    lien article ManyToMany
+
 
 
 

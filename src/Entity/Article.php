@@ -53,9 +53,20 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="article")
+     */
+    private $media;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $myFile;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +149,46 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function getMyFile()
+    {
+        return $this->myFile;
+    }
+
+    public function setMyFile($myFile): self
+    {
+        $this->myFile = $myFile;
 
         return $this;
     }

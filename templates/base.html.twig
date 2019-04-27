@@ -46,6 +46,9 @@
               </nav>
             {% endblock %}
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+            <script src="{{ asset('js/MyJs.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

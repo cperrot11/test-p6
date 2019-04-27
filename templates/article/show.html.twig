@@ -9,9 +9,13 @@
             <div class="content"><img src={{ article.picture }} alt="">
                 {{ article.content | raw}}
             </div>
+            {% if article.myFile is not null %}
+                <div><a href="{{ asset('uploads/' ~ article.myFile) }}">Voir doc</a></div>
+            {% endif %}
             <a href="{{ path('blog')}}" class="btn btn-primary">Retour</a>
         </article>
     </section>
+
     <section>
         {% for comment in article.comments %}
             <div class="comment">
