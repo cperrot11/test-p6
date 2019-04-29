@@ -6,16 +6,22 @@
     <h1>Nouvelle figure</h1>
     <section>
         {{ form_start(formArticle) }}
-            {{ form_row(formArticle) }}
+            {{ form_row(formArticle.title) }}
+            {{ form_row(formArticle.createdAt) }}
+            {{ form_row(formArticle.content) }}
+            {{ form_row(formArticle.picture) }}
+            {{ form_row(formArticle.myFile) }}
+            <section>
+                <h3>Liste média</h3>
+                <ul class="media" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
+                    <ul>
+                        {% for media in formArticle.media %}
+                            <li>{{ form_widget(media.name) }}</li>
+                        {% endfor %}
+                    </ul>
+            </section>
             <button type="submit" class="btn btn-success">Créer</button>
         {{ form_end(formArticle) }}
     </section>
-    {#<section>#}
-        {#{% for media in article.media %}#}
-            {#<li>{{ form_row(media.name) }}</li>#}
-        {#{% endfor %}#}
-        {#<ul class="medias" data-prototype="{{ form_widget(form.media.vars.prototype)|e('html_attr') }}">#}
 
-        {#</ul>#}
-    {#</section>#}
 {% endblock %}

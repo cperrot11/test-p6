@@ -54,7 +54,7 @@ class Article
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="article")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", cascade={"persist"}, mappedBy="article")
      */
     private $media;
 

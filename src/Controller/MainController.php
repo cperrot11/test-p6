@@ -10,6 +10,8 @@ use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
+use App\Services\FileUploader;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Provider\DateTime;
 use Symfony\Component\HttpFoundation\File\File;
@@ -56,9 +58,17 @@ class MainController extends AbstractController
     /**
      * @Route("/user/trick/new", name="blog_create")
      */
-    public function ArticleNew(Article $article=null, Request $request, ObjectManager $manager){
+    public function ArticleNew(Article $article=null, Request $request, ObjectManager $manager, FileUploader $fileUploader){
         $article = new Article();
+
         $article->setCreatedAt(new \DateTime());
+        $media1 = new Media();
+        $media1->setName('media1');
+        $article->getMedia()->add($media1);
+        $media2 = new Media();
+        $media2->setName('media2');
+        $article->getMedia()->add($media2);
+
 
         $form = $this->createForm(ArticleType::class, $article);
 
@@ -68,19 +78,9 @@ class MainController extends AbstractController
 
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $form['myFile']->getData();
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-
-            // Move the file to the directory where brochures are stored
-            try {
-                $file->move(
-                    $this->getParameter('upload_dir'),
-                    $fileName
-                );
-                $article->setMyFile($fileName);
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-
+            $fileName = $fileUploader->upload($file);
+            $article->setMyFile($fileName);
+            var_dump($article);
             $manager->persist($article);
             $manager->flush();
 
@@ -89,54 +89,26 @@ class MainController extends AbstractController
 
         return $this->render('article/trickNew.html.twig', [
             'title'=>'New figure',
-            'formArticle'=>$form->createView()
+            'formArticle'=>$form->createView(),
+            'article'=>$article
         ]);
     }
     /**
      * @Route("/user/trick/{id}/edit", name="blog_update")
      */
-    public function ArticleUpdate(Article $article=null, Request $request, ObjectManager $manager){
-        if (!$article){
-            $article = new Article();
-            $action ='Créer';
-            $titre = 'New';
-            $titre2 = 'Ajouter figure.';
-//            $media1 = new Media();
-//            $media1->setName('media1');
-//            $media2 = new Media();
-//            $media2->setName('media2');
-//            $article->getMedia()->add($media1);
-//            $article->getMedia()->add($media2);
-        }
-        else {
-            $action='Modifier';
-            $titre = 'Update';
-            $titre2 = 'Modifier figure.';
-            $article->setMyFile(
+    public function ArticleUpdate(Article $article=null, Request $request, ObjectManager $manager, FileUploader $fileUploader){
+        $article->setMyFile(
                 new File($this->getParameter('upload_dir').'\\'.$article->getMyFile())
             );
-        }
+
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            if(!$article->getId()){
-                $article->setCreatedAt(new \DateTime());
-            }
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-            $file = $form['myFile']->getData();
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
-            // Move the file to the directory where brochures are stored
-            try {
-                $file->move(
-                    $this->getParameter('upload_dir'),
-                    $fileName
-                );
-                $article->setMyFile($fileName);
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
+            $file = $form['myFile']->getData();
+            $fileName = $fileUploader->upload($file);
+            $article->setMyFile($fileName);
 
             $manager->persist($article);
             $manager->flush();

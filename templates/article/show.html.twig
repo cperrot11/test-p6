@@ -12,6 +12,16 @@
             {% if article.myFile is not null %}
                 <div><a href="{{ asset('uploads/' ~ article.myFile) }}">Voir doc</a></div>
             {% endif %}
+            <section>
+                <h3>Liste média</h3>
+                <ul class="medias">
+                    <ul>
+                        {{ dump(article)  }}
+                        {% for medium in article.media %}
+                            <li>{{ medium.name }}</li>
+                        {% endfor %}
+                    </ul>
+            </section>
             <a href="{{ path('blog')}}" class="btn btn-primary">Retour</a>
         </article>
     </section>

@@ -1,12 +1,17 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
-var $newLinkLi = $('<li></li>').append($addTagButton);
+var $addTagButton = $('<button type="button" class="btn btn-primary">Add a média</button>');
+var $newLinkLi = $('<span></span>').append($addTagButton);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
     $collectionHolder = $('ul.medias');
+
+    // add a delete link to all of the existing tag form li elements
+    $collectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
 
     // add the "add a tag" anchor and li to the tags ul
     $collectionHolder.append($newLinkLi);
@@ -35,7 +40,7 @@ function addArticleForm($collectionHolder, $newLinkLi) {
 
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
-    newForm = newForm.replace(/__name__/g, index);
+    //newForm = newForm.replace(/__name__/g, index);
 
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
@@ -43,4 +48,13 @@ function addArticleForm($collectionHolder, $newLinkLi) {
     // Display the form in the page in an li, before the "Add a tag" link li
     var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
+}
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormButton = $('<button type="button" class="btn btn-danger">Delete this média</button>');
+    $tagFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
 }
