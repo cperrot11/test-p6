@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ResettingController!{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Renouvellement du mot de passe</h1>
+    {% for flashMessage in app.session.flashBag.get('warning') %}
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    {{form_start(form)}}
+        {{ form_row(form.email) }}
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+    {{form_end(form)}}
+{% endblock %}
