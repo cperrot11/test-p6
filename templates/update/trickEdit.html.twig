@@ -3,19 +3,19 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>{{ title2 }}</h1>
+    <h1>Modifier figure</h1>
     <section>
         {{ form_start(formArticle) }}
             {{ form_row(formArticle) }}
-            <button type="submit" class="btn btn-success">{{ action }}</button>
+            <button type="submit" class="btn btn-success">Modifier</button>
         {{ form_end(formArticle) }}
     </section>
-    {#<section>#}
-        {#{% for media in article.media %}#}
-            {#<li>{{ form_row(media.name) }}</li>#}
-        {#{% endfor %}#}
-        {#<ul class="medias" data-prototype="{{ form_widget(form.media.vars.prototype)|e('html_attr') }}">#}
+    <section>
+        {% for media in article.media %}
+            <li>{{ form_row(media.name) }}</li>
+        {% endfor %}
+        <ul class="medias" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
 
-        {#</ul>#}
-    {#</section>#}
+        </ul>
+    </section>
 {% endblock %}

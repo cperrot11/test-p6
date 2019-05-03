@@ -161,7 +161,7 @@ class Article
         return $this->media;
     }
 
-    public function addMedium(Media $medium): self
+    public function addMedium(Media $medium)
     {
         if (!$this->media->contains($medium)) {
             $this->media[] = $medium;
@@ -171,7 +171,7 @@ class Article
         return $this;
     }
 
-    public function removeMedium(Media $medium): self
+    public function removeMedium(Media $medium)
     {
         if ($this->media->contains($medium)) {
             $this->media->removeElement($medium);

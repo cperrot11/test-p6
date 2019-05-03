@@ -13,7 +13,7 @@
             {{ form_row(formArticle.myFile) }}
             <section>
                 <h3>Liste média</h3>
-                <ul class="media" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
+                <ul class="medias" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
                     <ul>
                         {% for media in formArticle.media %}
                             <li>{{ form_widget(media.name) }}</li>

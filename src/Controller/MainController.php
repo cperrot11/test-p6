@@ -64,10 +64,10 @@ class MainController extends AbstractController
         $article->setCreatedAt(new \DateTime());
         $media1 = new Media();
         $media1->setName('media1');
-        $article->getMedia()->add($media1);
+        $article->addMedium($media1);
         $media2 = new Media();
         $media2->setName('media2');
-        $article->getMedia()->add($media2);
+        $article->addMedium($media2);
 
 
         $form = $this->createForm(ArticleType::class, $article);
@@ -117,9 +117,8 @@ class MainController extends AbstractController
         }
 
         return $this->render('update/trickEdit.html.twig', [
-            'title'=>$titre,
-            'title2'=>$titre2,
-            'action' => $action,
+            'title'=>'Update figure',
+            'article'=>$article,
             'formArticle'=>$form->createView()
         ]);
     }

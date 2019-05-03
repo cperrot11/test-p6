@@ -16,7 +16,6 @@
                 <h3>Liste média</h3>
                 <ul class="medias">
                     <ul>
-                        {{ dump(article)  }}
                         {% for medium in article.media %}
                             <li>{{ medium.name }}</li>
                         {% endfor %}

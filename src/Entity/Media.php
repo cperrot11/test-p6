@@ -28,10 +28,10 @@ class Media
      */
     private $article;
 
-//    public function __construct()
-//    {
-//        $this->article = new ArrayCollection();
-//    }
+    public function __construct()
+    {
+        $this->article = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -58,19 +58,21 @@ class Media
         return $this->article;
     }
 
-    public function addArticle(Article $article): self
+    public function addArticle(Article $article)
     {
         if (!$this->article->contains($article)) {
             $this->article[] = $article;
+            $article->addMedium($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeArticle(Article $article)
     {
         if ($this->article->contains($article)) {
             $this->article->removeElement($article);
+            $article->removeMedium($this);
         }
 
         return $this;
