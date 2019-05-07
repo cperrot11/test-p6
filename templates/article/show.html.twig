@@ -14,14 +14,25 @@
             {% endif %}
             <section>
                 <h3>Liste média</h3>
-                <ul class="medias">
-                    <ul>
-                        {% for medium in article.media %}
-                            <li>{{ medium.name }}</li>
-                        {% endfor %}
-                    </ul>
+                {#<ul class={{ is_granted('ROLE_USER')?"medias_full":"medias" }}>#}
+                <ul>
+                    {% for medium in article.media %}
+                         <li>
+                             {{ medium.name }}
+                             {#{% if is_granted('ROLE_USER') %}#}
+                                {#<a href="{{ path('/user/trick/{id}/edit', {id : article.id}) }}"><i class="fa fa-envelope-o"></i></a>#}
+                                 {#<a href="{{ path('blog_update', {id : article.id}) }}"><i class="fas fa-edit"></i></a>#}
+                                 {#<a href="{{ path('show_trick', {id : article.id}) }}"><i class="fas fa-trash"></i></a>#}
+                             {#{% endif %}#}
+                         </li>
+                    {% endfor %}
+                </ul>
             </section>
             <a href="{{ path('blog')}}" class="btn btn-primary">Retour</a>
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('blog_update', {id : article.id})}}" class="btn btn-success">Editer</a>
+                <a href="{{ path('blog_update', {id : article.id})}}" class="btn btn-danger">Supprimer</a>
+            {% endif %}
         </article>
     </section>
 
@@ -47,7 +58,7 @@
             {{ form_row(commentForm._token) }}
             {{ form_end(commentForm, {'render_rest': false}) }}
         {% else %}
-            <h2>Vous ne pouvez pas commenter.</h2>
+            <h2>Vous ne pouvez pas commenter, sans être logué.</h2>
             <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
         {% endif %}
 

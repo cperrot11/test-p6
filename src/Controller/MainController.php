@@ -28,7 +28,7 @@ class MainController extends AbstractController
     public function index()
     {
         return $this->render('main/index.html.twig', [
-            'title'=>'Bienvennue',
+            'title'=>'Bienvenue',
             'afficher'=>true
         ]);
     }
@@ -96,19 +96,27 @@ class MainController extends AbstractController
     /**
      * @Route("/user/trick/{id}/edit", name="blog_update")
      */
-    public function ArticleUpdate(Article $article=null, Request $request, ObjectManager $manager, FileUploader $fileUploader){
+    public function ArticleUpdate(Article $article, Request $request, ObjectManager $manager, FileUploader $fileUploader){
+        //save the file before form.
+        $fileIni = $article->getMyFile();
         $article->setMyFile(
-                new File($this->getParameter('upload_dir').'\\'.$article->getMyFile())
-            );
+            new File($this->getParameter('upload_dir').'\\'.$article->getMyFile())
+        );
 
         $form = $this->createForm(ArticleType::class, $article);
+        dump($article);
+        dump($form);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-
-            $file = $form['myFile']->getData();
-            $fileName = $fileUploader->upload($file);
-            $article->setMyFile($fileName);
+            if (is_null($article->getMyFile())) {
+                $article->setMyFile($fileIni);
+            }
+            else {
+                $file = $form['myFile']->getData();
+                $fileName = $fileUploader->upload($file);
+                $article->setMyFile($fileName);
+            }
 
             $manager->persist($article);
             $manager->flush();

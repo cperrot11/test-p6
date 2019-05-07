@@ -6,7 +6,7 @@ var $newLinkLi = $('<span></span>').append($addTagButton);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
-    $collectionHolder = $('ul.medias');
+    $collectionHolder = $('ul.medias_full');
 
     // add a delete link to all of the existing tag form li elements
     $collectionHolder.find('li').each(function() {
