@@ -63,6 +63,11 @@ class Article
      */
     private $myFile;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Media", cascade={"persist", "remove"})
+     */
+    private $vignette;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -189,6 +194,18 @@ class Article
     public function setMyFile($myFile): self
     {
         $this->myFile = $myFile;
+
+        return $this;
+    }
+
+    public function getVignette(): ?Media
+    {
+        return $this->vignette;
+    }
+
+    public function setVignette(?Media $vignette): self
+    {
+        $this->vignette = $vignette;
 
         return $this;
     }

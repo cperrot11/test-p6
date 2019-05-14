@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Media;
+use App\Repository\MediaRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,6 +21,15 @@ class ArticleType extends AbstractType
             ->add('createdAt')
             ->add('picture')
             ->add('content')
+            ->add('vignette', EntityType::class, [
+                'class'=>Media::class,
+                'query_builder' => function (MediaRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                },
+                'choice_label'=>'name'
+            ])
+
             ->add('myFile',FileType::class, [
                 'label' => 'Brochure (PDF file)',
                 'required' => false,
@@ -29,6 +40,7 @@ class ArticleType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ]);
+        dump($options);
     }
 
     public function configureOptions(OptionsResolver $resolver)

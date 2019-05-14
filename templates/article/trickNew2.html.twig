@@ -1,0 +1,13 @@
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Nouvelle figure</h1>
+    <section>
+        {{ form_start(formArticle) }}
+            {{ form_row(formArticle) }}
+        {{ form_end(formArticle) }}
+    </section>
+
+{% endblock %}
