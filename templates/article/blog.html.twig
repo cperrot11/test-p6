@@ -9,10 +9,12 @@
         {% for article in articles %}
             <article class="col-md-3">
                 <div class="card text-white bg-secondary mb-3">
-                    {{ article.id}} : {{ article.title }}
-                    <div class="">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
-                    <div><img src={{ article.picture }} alt="" style="width:50%">
+                    <div class="card-header"><img src={{ article.picture }} alt="" style="width:50%">
                         {{ article.content(200) | raw}}
+                        {{ article.id}} : {{ article.title }}
+                    </div>
+                    <div class="card-body">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
+                    <div class="card-footer">
                         <a href="{{ path('show_trick', {id : article.id}) }}" class="btn btn-primary">Lire la suite</a>
                     </div>
                 </div>

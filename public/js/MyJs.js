@@ -1,8 +1,11 @@
+var test = $('#test').data('url');
+console.log(test);
 var $collectionHolder;
 
 // setup an "add a tag" link
 var $addTagButton = $('<button type="button" class="btn btn-primary">Add a média</button>');
 var $newLinkLi = $('<span></span>').append($addTagButton);
+
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
@@ -23,8 +26,22 @@ jQuery(document).ready(function() {
     $addTagButton.on('click', function(e) {
         // add a new tag form (see next code block)
         addArticleForm($collectionHolder, $newLinkLi);
+        $('#article_media___name___rec').on('click',function(a) {
+            a.preventDefault();
+            var adresse = "{{ path('blog') }}";
+            alert(adresse);
+            $.ajax({
+                url: "{{ path('blog') }}",
+                method: "POST",
+                data: {
+                    "media_name": 'tot'
+                }
+            });
+        });
     });
+
 });
+
 function addArticleForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
@@ -53,7 +70,7 @@ function addTagFormDeleteLink($tagFormLi) {
     var $removeFormButton = $('<button type="button" class="btn btn-danger">Delete this média</button>');
     $tagFormLi.append($removeFormButton);
 
-    $removeFormButton.on('click', function(e) {
+    $removeFormButton.on('click', function (e) {
         // remove the li for the tag form
         $tagFormLi.remove();
     });

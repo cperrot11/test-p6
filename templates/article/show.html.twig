@@ -5,6 +5,12 @@
     <section class="articles">
         <article>
             <h2>{{ article.title }}</h2>
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <iframe src="{{ article.video}}" width="800" height="450" frameborder="0"></iframe>
+                </div>
+                <!-- /video -->
+            </div>
             <div class="metadata">{{ article.createdAt | date('d/m/y') }} à {{ article.createdAt | date('H:i ') }}</div>
             <div class="content"><img src={{ article.picture }} alt="">
                 {{ article.content | raw}}
@@ -12,22 +18,22 @@
             {% if article.myFile is not null %}
                 <div><a href="{{ asset('uploads/' ~ article.myFile) }}">Voir doc</a></div>
             {% endif %}
-            <div>A la une : {{ article.vignette.name }}</div>
+            <div>A la une : {{ article.vignette?article.vignette.name }}</div>
             <section>
                 <h3>Liste média</h3>
                 {#<ul class={{ is_granted('ROLE_USER')?"medias_full":"medias" }}>#}
-                <ul>
+                <div class="medias_display">
                     {% for medium in article.media %}
-                         <li>
-                             {{ medium.name }}
+                        <span class="col-2">
+                            {{ medium.name }}
+                        </span>
                              {#{% if is_granted('ROLE_USER') %}#}
                                 {#<a href="{{ path('/user/trick/{id}/edit', {id : article.id}) }}"><i class="fa fa-envelope-o"></i></a>#}
                                  {#<a href="{{ path('blog_update', {id : article.id}) }}"><i class="fas fa-edit"></i></a>#}
                                  {#<a href="{{ path('show_trick', {id : article.id}) }}"><i class="fas fa-trash"></i></a>#}
                              {#{% endif %}#}
-                         </li>
-                    {% endfor %}
-                </ul>
+                     {% endfor %}
+                </div>
             </section>
             <a href="{{ path('blog')}}" class="btn btn-primary">Retour</a>
             {% if is_granted('ROLE_USER') %}

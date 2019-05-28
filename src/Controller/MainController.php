@@ -99,14 +99,12 @@ class MainController extends AbstractController
     public function ArticleUpdate(Article $article, Request $request, ObjectManager $manager, FileUploader $fileUploader){
         //save the file before form.
         $fileIni = $article->getMyFile();
-        $article->setMyFile(
-            new File($this->getParameter('upload_dir').'\\'.$article->getMyFile())
-        );
-
+        if ($fileIni){
+            $article->setMyFile(
+                new File($this->getParameter('upload_dir').'\\'.$article->getMyFile())
+            );
+        }
         $form = $this->createForm(ArticleType::class, $article);
-        dump($article);
-        dump($form);
-
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             if (is_null($article->getMyFile())) {
@@ -129,6 +127,13 @@ class MainController extends AbstractController
             'article'=>$article,
             'formArticle'=>$form->createView()
         ]);
+    }
+    /**
+     * @Route("user/media", name="add_media")
+     */
+    public function AddMedia(Request $request, Article $article){
+        console.log("test");
+        return null;
     }
     /**
      * @return string

@@ -6,25 +6,34 @@
     <h1>Modifier figure</h1>
     <section>
         {{ form_start(formArticle) }}
-        {{ form_row(formArticle.title) }}
-        {{ form_row(formArticle.createdAt) }}
-        {{ form_row(formArticle.content) }}
-        {{ form_row(formArticle.picture) }}
-        {{ form_row(formArticle.myFile) }}
-        {{ form_row(formArticle.vignette) }}
-
-
-        <section>
-            <h3>Liste média</h3>
-            <ul class="medias_full" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
-                <ul>
-                    {% for media in formArticle.media %}
-                        <li>{{ form_widget(media.name) }}</li>
+            {{ form_row(formArticle.title) }}
+            {{ form_row(formArticle.createdAt) }}
+            {{ form_row(formArticle.content) }}
+            {{ form_row(formArticle.picture) }}
+            {{ form_row(formArticle.video) }}
+            {{ form_row(formArticle.myFile) }}
+            {{  form_label(formArticle.vignette) }}
+                <select id="{{ formArticle.vignette.vars.id }}" name="{{ formArticle.vignette.vars.full_name }}">
+                    {% for vi in formArticle.vignette.vars.choices %}
+                        <option value="{{ vi.value }}" {{ vi.label==formArticle.vignette.vars.data.name ?'selected':'' }}>
+                            {{ vi.label }}
+                        </option>
                     {% endfor %}
+                </select>
+            {{  form_errors(formArticle.vignette) }}
+            {% do formArticle.vignette.setRendered() %}
+            <section>
+                <h3>Liste média</h3>
+                <ul class="medias_full" data-prototype="{{ form_widget(formArticle.media.vars.prototype)|e('html_attr') }}">
+                    <ul>
+                        {% for media in formArticle.media %}
+                            <li>{{ form_widget(media.name) }}</li>
+                        {% endfor %}
+                    </ul>
                 </ul>
-            </ul>
-        </section>
-        <button type="submit" class="btn btn-success">Modifier</button>
+            </section>
+            <button type="submit" class="btn btn-success">Modifier</button>
+            <button id="test" data-url="{{ path('blog') }}">Test</button>
         {{ form_end(formArticle) }}
     </section>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Media;
+use App\Repository\ArticleRepository;
 use App\Repository\MediaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +21,9 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('createdAt')
             ->add('picture')
+            ->add('video')
             ->add('content')
+//            Affiche la totalité des médias sans filter ceux de l'article
             ->add('vignette', EntityType::class, [
                 'class'=>Media::class,
                 'query_builder' => function (MediaRepository $er) {
@@ -29,7 +32,6 @@ class ArticleType extends AbstractType
                 },
                 'choice_label'=>'name'
             ])
-
             ->add('myFile',FileType::class, [
                 'label' => 'Brochure (PDF file)',
                 'required' => false,
@@ -40,7 +42,6 @@ class ArticleType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ]);
-        dump($options);
     }
 
     public function configureOptions(OptionsResolver $resolver)

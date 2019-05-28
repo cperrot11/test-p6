@@ -68,6 +68,11 @@ class Article
      */
     private $vignette;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $video;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -206,6 +211,18 @@ class Article
     public function setVignette(?Media $vignette): self
     {
         $this->vignette = $vignette;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }
